@@ -6,44 +6,44 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Exploratory Analysis of Bike-Share Trip Data
+#Exploratory Analysis of Bike-Share Trip Data
 
 
-## Introduction To Business Problem
+##Introduction To Business Problem
 
 Use bicycle share services has grown in cities across the US both as a means of transportation and for exercise. These bikes allow users to pay, use, and return bikes electronically, which means data about bikes, stations, and trips are recorded and stored.
 
-In this case study, I will analyze bike trip data provided from bike-share management company that operates around the US, [Motivate](https://www.motivateco.com/). The ride data I am using is from a bike-share service in Chicago that Motivate operates called Divvy. The data is available for use per this [license](https://www.divvybikes.com/data-license-agreement). For the purpose of this project I will use the name Cyclistic to refer to a fictional company that also operates in Chicago. This fictional company offers three passes to access their bikes: one-time use, single day pass, and an annual membership. One-time and single day passes are considered casual users and customers who purchase annual memberships are referred to as members. In this project I will perform exploratory analysis to bike trip data to understand how casual riders and annual members use Cyclistic bikes differently. The goal of this analysis would be to come up with recommendations for a new marketing strategy to convert casual riders into annual members. 
+In this case study, I will analyze bike trip data provided from bike-share management company that operates around the US, [Motivate](https://www.motivateco.com/). The ride data I am using is from a bike-share service in Chicago that Motivate operates called Divvy. The data is available for use per this [license](https://www.divvybikes.com/data-license-agreement). For the purpose of this project I will use the name Cyclistic to refer to a fictional company that also operates in Chicago. This fictional company offers three passes to access their bikes: one-time use, single day pass, and an annual membership. One-time and single day passes are considered casual users and customers who purchase annual memberships are refered to as members. In this project I will perform exploratory analysis to bike trip data to understand how casual riders and annual members use Cyclistic bikes differently. The goal of this analysis would be to come up with recommendations for a new marketing strategy to convert casual riders into annual members. 
 Then our team will use insights from casual riders vs annual member trends and think about “why would casual riders buy Cyclistic annual memberships?” in order to come up with recommendations for a new marketing strategy to convert casual riders into annual members
 
 
-## Asking Business Task Centric Questions
+##Asking Business Task Centric Questions
 
-Below are some questions that need to be asked regarding the business task.
+Below are some questions that need to be asked regarding the busienss task.
 
 1. What metrics will I need to compare bike-share users usage?
-  - trip duration
-  - trip time
-  - trip date
-  - user type
+  *trip durarion
+  *trip time
+  *trip date
+  *user type
 2. What time frames will I need to analyze?
-  - Past 12 months to find any seasonal trends
-  - Look at usage per each day of the week to look at weekly trends
+  *Past 12 months to find any seasonal trends
+  *Look at usage per each day of the week to look at weekly trends
 3. What tools will I use for data cleaning and analysis?
   
-## Collection And Importation Of Data
+##Collection And Importation Of Data
 
 The raw trip data was made available [here](https://divvy-tripdata.s3.amazonaws.com/index.html). The data is release as csv files one for each month. I used data from the past 12 months each file consist of trip data. The raw contained the following variables:
-  - ride_id - to keep track of individual trips taken
-  - rideable_type - type of bike used
-  - start_at - datetime ride started
-  - ended_at - datetime ride ended
-  - start_station_name - to identify start station 
-  - start_station_id - to identify start station
-  - end_station_name - to identify end station
-  - end_station_id - to identify end station
-  - 4 columns consisting of coordinate data of start and end station
-  - member_casual - user type
+  *ride_id - to keep track of individual trips taken
+  *rideable_type - type of bike used
+  *start_at - datetime ride started
+  *ended_at - datetime ride ended
+  *start_station_name - to identify start station 
+  *start_station_id - to identify start station
+  *end_station_name - to identify end station
+  *end_station_id - to identify end station
+  *4 columns consisting of coordinate data of start and end station
+  *member_casual - user type
   
 I used RStudio and the tidyverse, lubridate, and ggplot2 packages to import, clean, and aggregate this data. Before the data was imported I checked where the working directory was and then set the working directory to easily access raw data files and eventually save the files of aggregated data.
   
@@ -71,7 +71,7 @@ setwd("/users/acofi/Documents/Data_Analysis/Cousera/Portfolio & Case Study/Case 
 `202106` <- read_csv("Raw Data/202106-divvy-tripdata.csv")
 ```
 
-## Data Inspected For Validity And Merged
+#Data Inspected For Validity And Merged
 
 Column specifications are listed in the console after each file is imported. This is where I saw that the "station_start_id" and "end_station_id" variable were of the numeric type double for the data files from July 2020 through November 2020. The other 7 files had those two columns as characters. In order to merge all 12 files into one file to clean I converted the any station_id variable that was a numeric vector into a character vector.
 
@@ -103,21 +103,21 @@ str(`202106`)
 all_trips <- bind_rows(`202007`, `202008`, `202009`, `202010`, `202011`, `202012`, `202101`, `202102`, `202103`, `202104`, `202105`, `202106`)
 ```
 
-## Data Wrangling
+##Data Wrangling
 
 Steps in data cleaning process:
   1. Removing columns of data variables that will not be used
-    - The four columns on station coordinate data was removed
+    * The four columns on station coordinate data was removed
   2. The single file is further inspected by looking at:
-    - column names
-    - the number of rows
-    - functions to preview data
-    - summary() function to look at aggregate summary of values for each variable in the data frame
+    *column names
+    *the number of rows
+    *functions to preview data
+    *summary() function to look at aggregate summary of values for each variable in the data frame
       > I checked that each character vector had the same length and that
       > the "started_at" variable was within the appropriate ranges of 2020-07-01 to 2021-06-30.
       > The "ended_at" variable was inspected to make sure the min value was after the min value for "started_at".
   3. Columns representing date, month, day, year, and day of the week were added so we can aggregate data on these variable to look for trends in usage.
-    - as.Date() was used to convert "start_at" variable to a date and the format() function was used to create the other added variables from the date variable.
+    * as.Date() was used to convert "start_at" variable to a date and the format() function was used to create the other added variables from the date variable.
   4. A column for the duration of the ride is added called "ride_length". This figure is calculated from the "started_at" and "ended_at" variables and is then converted into a numeric and then divided by 60 to get the ride duration in minutes instead of seconds.
  
   
@@ -149,16 +149,16 @@ all_trips$ride_length <- as.numeric(as.character(all_trips$ride_length))/60
 ```
   
   5. The updated data frame is then inspected another time to make sure the variable values are in the appropriate constraints for the variable by looking at:
-    - A summary of the data variables
+    * A summary of the data variables
       > The minimum value for the "ride_length" is a negative number,
       > so I had to use the filter() function to remove rows that 
       > have ride_length as less than or equal to 0.
-    - Unique values of variables "rideable_type", "member_casual", "start_station_name", and "end_station_name" to find any inconsistencies or errors.
+    * Unique values of variables "rideable_type", "member_casual", "start_station_name", and "end_station_name" to find any inconsistencies or errors.
       > There were 3 unique values in the "start_station_name" and "end_station_name" columns
       > that were not street intersections nor destinations: 
       > NA, "WATSON TESTING - DIVVY", and "Base - 2132 W Hubbard Warehouse".
   6. Rows where "ride_length" is less than or equal to 0 and rows where the station named matched testing stations that were not used by users were removed.
-    - filter() function is used which also removed NA values in those columns filtered out
+    *filter() function is used which also removed NA values in those columns filtered out
 ```{r}
 #inspect ranges of ride_length and unique values of character columns to validate data
 summary(all_trips)
@@ -179,7 +179,7 @@ all_trips_v2 <- all_trips %>%
   
 
 
-## Aggregating Data
+##Aggregating Data
 
 A quick descriptive analysis of "ride_length" was done to confirm that the column is now within the appropriate constraint of greater than 0 min. Then the "ride_length" is aggregated to compare descriptive statistic of "ride_length" of grouped by user type.
 

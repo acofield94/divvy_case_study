@@ -1,9 +1,9 @@
 Untitled
 ================
 
-# Exploratory Analysis of Bike-Share Trip Data
+\#Exploratory Analysis of Bike-Share Trip Data
 
-## Introduction To Business Problem
+\#\#Introduction To Business Problem
 
 Use bicycle share services has grown in cities across the US both as a
 means of transportation and for exercise. These bikes allow users to
@@ -21,7 +21,7 @@ fictional company that also operates in Chicago. This fictional company
 offers three passes to access their bikes: one-time use, single day
 pass, and an annual membership. One-time and single day passes are
 considered casual users and customers who purchase annual memberships
-are referred to as members. In this project I will perform exploratory
+are refered to as members. In this project I will perform exploratory
 analysis to bike trip data to understand how casual riders and annual
 members use Cyclistic bikes differently. The goal of this analysis would
 be to come up with recommendations for a new marketing strategy to
@@ -31,38 +31,31 @@ would casual riders buy Cyclistic annual memberships?” in order to come
 up with recommendations for a new marketing strategy to convert casual
 riders into annual members
 
-## Asking Business Task Centric Questions
+\#\#Asking Business Task Centric Questions
 
-Below are some questions that need to be asked regarding the business
+Below are some questions that need to be asked regarding the busienss
 task.
 
-1.  What metrics will I need to compare bike-share users usage?
-
--   trip duration
--   trip time
--   trip date
--   user type
-
-2.  What time frames will I need to analyze?
-
--   Past 12 months to find any seasonal trends
--   Look at usage per each day of the week to look at weekly trends
-
+1.  What metrics will I need to compare bike-share users usage? *trip
+    durarion *trip time *trip date *user type
+2.  What time frames will I need to analyze? *Past 12 months to find any
+    seasonal trends *Look at usage per each day of the week to look at
+    weekly trends
 3.  What tools will I use for data cleaning and analysis?
 
-## Collection And Importation Of Data
+\#\#Collection And Importation Of Data
 
 The raw trip data was made available
 [here](https://divvy-tripdata.s3.amazonaws.com/index.html). The data is
 release as csv files one for each month. I used data from the past 12
 months each file consist of trip data. The raw contained the following
-variables: - ride\_id - to keep track of individual trips taken -
-rideable\_type - type of bike used - start\_at - datetime ride started -
-ended\_at - datetime ride ended - start\_station\_name - to identify
-start station - start\_station\_id - to identify start station -
-end\_station\_name - to identify end station - end\_station\_id - to
-identify end station - 4 columns consisting of coordinate data of start
-and end station - member\_casual - user type
+variables: *ride\_id - to keep track of individual trips taken
+*rideable\_type - type of bike used *start\_at - datetime ride started
+*ended\_at - datetime ride ended *start\_station\_name - to identify
+start station *start\_station\_id - to identify start station
+*end\_station\_name - to identify end station *end\_station\_id - to
+identify end station *4 columns consisting of coordinate data of start
+and end station *member\_casual - user type
 
 I used RStudio and the tidyverse, lubridate, and ggplot2 packages to
 import, clean, and aggregate this data. Before the data was imported I
@@ -121,7 +114,7 @@ library(ggplot2)
 getwd() #check working directory
 ```
 
-    ## [1] "C:/Users/acofi/Documents/GitHub/divvy_case_study"
+    ## [1] "C:/Users/acofi/Documents/Data_Analysis/Cousera/Portfolio & Case Study/Case Study #1"
 
 ``` r
 setwd("/users/acofi/Documents/Data_Analysis/Cousera/Portfolio & Case Study/Case Study #1") #set working directory
@@ -390,7 +383,7 @@ setwd("/users/acofi/Documents/Data_Analysis/Cousera/Portfolio & Case Study/Case 
     ##   member_casual = col_character()
     ## )
 
-## Data Inspected For Validity And Merged
+\#Data Inspected For Validity And Merged
 
 Column specifications are listed in the console after each file is
 imported. This is where I saw that the “station\_start\_id” and
@@ -802,26 +795,26 @@ str(`202106`)
 all_trips <- bind_rows(`202007`, `202008`, `202009`, `202010`, `202011`, `202012`, `202101`, `202102`, `202103`, `202104`, `202105`, `202106`)
 ```
 
-## Data Wrangling
+\#\#Data Wrangling
 
 Steps in data cleaning process: 1. Removing columns of data variables
-that will not be used - The four columns on station coordinate data was
-removed 2. The single file is further inspected by looking at: - column
-names - the number of rows - functions to preview data - summary()
-function to look at aggregate summary of values for each variable in the
-data frame &gt; I checked that each character vector had the same length
-and that &gt; the “started\_at” variable was within the appropriate
-ranges of 2020-07-01 to 2021-06-30. &gt; The “ended\_at” variable was
-inspected to make sure the min value was after the min value for
-“started\_at”. 3. Columns representing date, month, day, year, and day
-of the week were added so we can aggregate data on these variable to
-look for trends in usage. - as.Date() was used to convert “start\_at”
-variable to a date and the format() function was used to create the
-other added variables from the date variable. 4. A column for the
-duration of the ride is added called “ride\_length”. This figure is
-calculated from the “started\_at” and “ended\_at” variables and is then
-converted into a numeric and then divided by 60 to get the ride duration
-in minutes instead of seconds.
+that will not be used \* The four columns on station coordinate data was
+removed 2. The single file is further inspected by looking at: *column
+names *the number of rows *functions to preview data *summary() function
+to look at aggregate summary of values for each variable in the data
+frame &gt; I checked that each character vector had the same length and
+that &gt; the “started\_at” variable was within the appropriate ranges
+of 2020-07-01 to 2021-06-30. &gt; The “ended\_at” variable was inspected
+to make sure the min value was after the min value for “started\_at”. 3.
+Columns representing date, month, day, year, and day of the week were
+added so we can aggregate data on these variable to look for trends in
+usage. \* as.Date() was used to convert “start\_at” variable to a date
+and the format() function was used to create the other added variables
+from the date variable. 4. A column for the duration of the ride is
+added called “ride\_length”. This figure is calculated from the
+“started\_at” and “ended\_at” variables and is then converted into a
+numeric and then divided by 60 to get the ride duration in minutes
+instead of seconds.
 
 ``` r
 #remove data columns that will not be used 
@@ -920,10 +913,10 @@ all_trips$ride_length <- as.numeric(as.character(all_trips$ride_length))/60
 
 5.  The updated data frame is then inspected another time to make sure
     the variable values are in the appropriate constraints for the
-    variable by looking at: - A summary of the data variables &gt; The
+    variable by looking at: \* A summary of the data variables &gt; The
     minimum value for the “ride\_length” is a negative number, &gt; so I
     had to use the filter() function to remove rows that &gt; have
-    ride\_length as less than or equal to 0. - Unique values of
+    ride\_length as less than or equal to 0. \* Unique values of
     variables “rideable\_type”, “member\_casual”,
     “start\_station\_name”, and “end\_station\_name” to find any
     inconsistencies or errors. &gt; There were 3 unique values in the
@@ -932,7 +925,7 @@ all_trips$ride_length <- as.numeric(as.character(all_trips$ride_length))/60
     TESTING - DIVVY”, and “Base - 2132 W Hubbard Warehouse”.
 6.  Rows where “ride\_length” is less than or equal to 0 and rows where
     the station named matched testing stations that were not used by
-    users were removed. - filter() function is used which also removed
+    users were removed. \*filter() function is used which also removed
     NA values in those columns filtered out
 
 ``` r
@@ -1718,7 +1711,7 @@ all_trips_v2 <- all_trips %>%
              all_trips$ride_length<=0))
 ```
 
-## Aggregating Data
+\#\#Aggregating Data
 
 A quick descriptive analysis of “ride\_length” was done to confirm that
 the column is now within the appropriate constraint of greater than 0
