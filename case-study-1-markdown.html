@@ -1733,12 +1733,12 @@ summary(all_trips_v2$ride_length)
 ##     0.00     7.57    13.68    25.65    25.18 55944.15
 
 #comparing members and casual users ride duration statistics
-duration_stats &lt;- aggregate2(all_trips_v2, &quot;ride_length&quot;, &quot;member_casual&quot;, c(&quot;min&quot;, &quot;median&quot;, &quot;mean&quot;, &quot;max&quot;))
-duration_stats &lt;- rename(duration_stats,
-       min_duration = ride_length.min,
-       median_duration = ride_length.median,
-       mean_duration = ride_length.mean,
-       max_duration = ride_length.max)
+duration_stats &lt;- all_trips_v2 %&gt;%
+  group_by(member_casual) %&gt;%
+  summarize(min_duration=min(ride_length),
+            median_duration=median(ride_length),
+            mean_duration=mean(ride_length),
+            max_duration =max(ride_length))
 
 
 #create aggregate data frame grouped by user type, date, month, and day of the week to save for visualization in Tableau to look at quarterly, monthly, and weekday trends

@@ -240,12 +240,12 @@ to further analyze with Tableau.
 summary(all_trips_v2$ride_length)
 
 #comparing members and casual users ride duration statistics
-duration_stats <- aggregate2(all_trips_v2, "ride_length", "member_casual", c("min", "median", "mean", "max"))
-duration_stats <- rename(duration_stats,
-       min_duration = ride_length.min,
-       median_duration = ride_length.median,
-       mean_duration = ride_length.mean,
-       max_duration = ride_length.max)
+duration_stats <- all_trips_v2 %>%
+  group_by(member_casual) %>%
+  summarize(min_duration=min(ride_length),
+            median_duration=median(ride_length),
+            mean_duration=mean(ride_length),
+            max_duration =max(ride_length))
 
 
 #create aggregate data frame grouped by user type, date, month, and day of the week to save for visualization in Tableau to look at quarterly, monthly, and weekday trends
